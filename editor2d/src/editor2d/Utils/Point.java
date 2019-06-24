@@ -1,4 +1,4 @@
-package editor2d.datamodel;
+package editor2d.Utils;
 
 
 public class Point {

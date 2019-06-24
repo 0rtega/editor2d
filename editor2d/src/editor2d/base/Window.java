@@ -12,10 +12,10 @@ import org.joml.Matrix4f;
 
 import editor2d.LWJGLPolyline;
 import editor2d.Utils.Antialiasing;
+import editor2d.Utils.Point;
 import editor2d.control.ArcBallCamera3D;
 import editor2d.control.Mouse;
 import editor2d.control.ProjectMatrix2D;
-import editor2d.datamodel.Point;
 import editor2d.graphics.Grid;
 import editor2d.storages.StorageColors;
 import editor2d.storages.StorageShaders;

@@ -14,8 +14,8 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import editor2d.Utils.Identifier;
+import editor2d.Utils.Point;
 import editor2d.Utils.Util;
-import editor2d.datamodel.Point;
 import editor2d.graphics.Shader;
 import editor2d.meshs.Mesh;
 import editor2d.storages.StorageColors;
