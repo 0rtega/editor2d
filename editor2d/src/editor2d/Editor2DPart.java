@@ -18,5 +18,6 @@ public class Editor2DPart {
 		animation.enable(PropertieAnimation.ANTIALIASING);
 		animation.enable(PropertieAnimation.GRID);
 		animation.setSizeCellGrid(SizeCellGrid.HALF_SIZE);
+		animation.init();
 	}
 }

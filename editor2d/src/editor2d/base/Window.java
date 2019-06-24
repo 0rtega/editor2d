@@ -41,6 +41,11 @@ public class Window {
 	}
 	public Window(Animation animation) {
 		this.animation = animation;
+		projectMatrix = new ProjectMatrix2D(width, height);
+		camera = new ArcBallCamera3D();
+		antialiasing = new Antialiasing();
+		grid = new Grid(this);
+		mouse = new Mouse(this);
 	}
 	
 	public void updateSize(int width, int height) {
@@ -51,21 +56,18 @@ public class Window {
 		if(properties.get(PropertieAnimation.GRID))grid.update(width, height);
 	}
 	
-	public void init() {
-		projectMatrix = new ProjectMatrix2D(width, height);
-		camera = new ArcBallCamera3D();
+	public void init() {	
 		camera.setViewFromAbove();
-		mouse = new Mouse(this);
 		mouse.init();
 		StorageShaders.getInstance().init();
-		if(properties.get(PropertieAnimation.ANTIALIASING)) {
-			antialiasing = new Antialiasing();
+		if(properties.get(PropertieAnimation.ANTIALIASING)) {		
 			antialiasing.init();
-		}
-		if(properties.get(PropertieAnimation.GRID))grid = new Grid(this);
+		}		
+		if(properties.get(PropertieAnimation.GRID)) {		
+			grid.init();
+		}	
 		StorageUniformBuffers.getInstance().init();
-		StorageColors.getInstance().init();
-		
+		StorageColors.getInstance().init();		
 		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

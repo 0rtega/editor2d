@@ -29,7 +29,6 @@ public class Animation extends Composite {
 		GL.createCapabilities();
 		
 		window = new Window(this);
-		window.init();
 		
 		this.addListener(SWT.Resize, event -> {
 			Rectangle bounds = this.getBounds();
@@ -47,6 +46,10 @@ public class Animation extends Composite {
 				cleanUp();
 			}
 		});		
+	}
+	
+	public void init() {
+		window.init();
 	}
 	
 	private long lastTime = System.currentTimeMillis();

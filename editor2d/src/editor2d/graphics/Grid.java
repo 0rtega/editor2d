@@ -61,9 +61,12 @@ public class Grid {
 	public Grid(Window window) {
 		this.camera = window.getCamera();
 		this.window = window;
-		shader = StorageShaders.getInstance().getShader(Figures.LINE);
 	}
 	
+	
+	public void init() {
+		shader = StorageShaders.getInstance().getShader(Figures.LINE);
+	}
 	private void buildMesh() {
 		init = true;
 		cleanUp();
