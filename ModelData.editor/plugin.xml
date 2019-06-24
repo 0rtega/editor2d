@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated modelData -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="modelData.presentation.ModelDataModelWizardID"
+            name="%_UI_ModelDataModelWizard_label"
+            class="modelData.presentation.ModelDataModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/ModelDataModelFile.gif">
+         <description>%_UI_ModelDataModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated modelData -->
+      <editor
+            id="modelData.presentation.ModelDataEditorID"
+            name="%_UI_ModelDataEditor_label"
+            icon="icons/full/obj16/ModelDataModelFile.gif"
+            extensions="modeldata"
+            class="modelData.presentation.ModelDataEditor"
+            contributorClass="modelData.presentation.ModelDataActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

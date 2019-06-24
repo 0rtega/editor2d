@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.e4.ui.workbench.swt.E4Application"
+            name="editor2d">
+         <property
+               name="lifeCycleURI"
+               value="bundleclass://editor2d/editor2d.E4LifeCycle">
+         </property>
+         <property
+               name="appName"
+               value="editor2d">
+         </property>
+      </product>
+   </extension>
+
+</plugin>
