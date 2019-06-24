@@ -11,6 +11,6 @@ public class Editor2DPart {
 	
 	@PostConstruct
 	public void postConstruct(Composite parent) {
-		Animation animation = new Animation(parent);
+		new Animation(parent);
 	}
 }
