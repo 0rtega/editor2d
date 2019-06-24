@@ -12,18 +12,24 @@ import java.util.Map;
 
 import org.joml.Matrix4f;
 
+import editor2d.Editor2DController;
 import editor2d.LWJGLPolyline;
 import editor2d.Utils.Antialiasing;
+import editor2d.Utils.FactoryEditParts;
 import editor2d.Utils.Point;
 import editor2d.base.Animation.PropertieAnimation;
 import editor2d.control.ArcBallCamera3D;
 import editor2d.control.Mouse;
 import editor2d.control.ProjectMatrix2D;
+import editor2d.editparts.IEditPart;
 import editor2d.graphics.Grid;
 import editor2d.storages.StorageColors;
+import editor2d.storages.StorageData;
+import editor2d.storages.StorageEditParts;
 import editor2d.storages.StorageFonts;
 import editor2d.storages.StorageShaders;
 import editor2d.storages.StorageUniformBuffers;
+import modelData.Node;
 
 public class Window {
 
@@ -33,6 +39,7 @@ public class Window {
 	private ArcBallCamera3D camera;
 	private Mouse mouse;
 	private Antialiasing antialiasing;
+	private Editor2DController editor2dController;
 	private Grid grid;
 	private Map<PropertieAnimation, Boolean> properties = new HashMap<Animation.PropertieAnimation, Boolean>();
 	{
@@ -46,6 +53,7 @@ public class Window {
 		antialiasing = new Antialiasing();
 		grid = new Grid(this);
 		mouse = new Mouse(this);
+		editor2dController = new Editor2DController();
 	}
 	
 	public void updateSize(int width, int height) {
@@ -78,6 +86,8 @@ public class Window {
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		
+		
+		editor2dController.init();
 		List<Point> points = new ArrayList<Point>();
 		points.add(new Point(0,1,0));
 		points.add(new Point(4,1,0));
@@ -87,6 +97,7 @@ public class Window {
 		pol = new LWJGLPolyline(points, Color.BLUE, 1, 0);
 	}
 	LWJGLPolyline pol ;
+	
 	
 	public void update() {
 		camera.update(1);

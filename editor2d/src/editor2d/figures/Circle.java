@@ -1,7 +1,15 @@
 package editor2d.figures;
 
+import java.awt.Color;
+
+import org.joml.Vector3f;
+
 public class Circle implements IFigure{
 
+	private Vector3f position = new Vector3f();
+	private Color color;
+	private boolean select = false;
+	private boolean hover = false;
 	
 	
 	@Override
