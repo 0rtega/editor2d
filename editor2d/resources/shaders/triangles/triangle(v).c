@@ -27,7 +27,7 @@ void main()
 		visible1 = visible;
 		color1 = color;
 		positionInWorld = vec3(position);
-   	 	gl_Position =  projectionMatrix * vec4(position, 1.0);
+   	 	gl_Position =  projectionMatrix * viewMatrix * vec4(position, 1.0);
 
 
 

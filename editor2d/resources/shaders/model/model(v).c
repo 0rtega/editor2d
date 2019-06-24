@@ -36,7 +36,7 @@ void main() {
 	
      
     vec4 modelPosition = uModelMatrix  * vec4(vertex, 1);
-    gl_Position = projectionMatrix * modelPosition;
+    gl_Position = projectionMatrix * viewMatrix * modelPosition;
     
     vPosition = vec3(modelPosition.xyz);
     vNormal = normal;

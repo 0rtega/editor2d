@@ -30,5 +30,5 @@ void main()
    	 worldMatrix [2][2] = scale.z;
    	 positionInWorld = vec3(worldMatrix  *  vec4(position, 1.0));
   	 normals = normal;
-   	 gl_Position =  projectionMatrix * worldMatrix * vec4(position, 1.0);
+   	 gl_Position =  projectionMatrix * viewMatrix * worldMatrix * vec4(position, 1.0);
 }

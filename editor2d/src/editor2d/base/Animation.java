@@ -9,6 +9,8 @@ import org.eclipse.swt.opengl.GLData;
 import org.eclipse.swt.widgets.Composite;
 import org.lwjgl.opengl.GL;
 
+import editor2d.graphics.Grid.SizeCellGrid;
+
 
 public class Animation extends Composite {
 
@@ -81,6 +83,22 @@ public class Animation extends Composite {
 
 	public GLCanvas getCanvas() {
 		return canvas;
+	}
+	
+	public void enable(PropertieAnimation propertie) {
+		window.getProperties().put(propertie, true);
+	}
+	
+	public void disable(PropertieAnimation propertie) {
+		window.getProperties().put(propertie, false);
+	}
+	
+	public void setSizeCellGrid(SizeCellGrid size) {
+		window.getGrid().setSizeCell(size);
+	}
+	
+	public enum PropertieAnimation {
+		ANTIALIASING, GRID, 
 	}
 	
 }

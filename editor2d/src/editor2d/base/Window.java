@@ -6,18 +6,22 @@ import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joml.Matrix4f;
 
 import editor2d.LWJGLPolyline;
 import editor2d.Utils.Antialiasing;
 import editor2d.Utils.Point;
+import editor2d.base.Animation.PropertieAnimation;
 import editor2d.control.ArcBallCamera3D;
 import editor2d.control.Mouse;
 import editor2d.control.ProjectMatrix2D;
 import editor2d.graphics.Grid;
 import editor2d.storages.StorageColors;
+import editor2d.storages.StorageFonts;
 import editor2d.storages.StorageShaders;
 import editor2d.storages.StorageUniformBuffers;
 
@@ -26,12 +30,15 @@ public class Window {
 	private Animation animation;
 	private int width, height;
 	private ProjectMatrix2D projectMatrix;
-	private Matrix4f PVMatrix = new Matrix4f();
 	private ArcBallCamera3D camera;
 	private Mouse mouse;
 	private Antialiasing antialiasing;
 	private Grid grid;
-	
+	private Map<PropertieAnimation, Boolean> properties = new HashMap<Animation.PropertieAnimation, Boolean>();
+	{
+		properties.put(PropertieAnimation.ANTIALIASING, true);
+		properties.put(PropertieAnimation.GRID, true);
+	}
 	public Window(Animation animation) {
 		this.animation = animation;
 	}
@@ -40,8 +47,8 @@ public class Window {
 		this.width = width;
 		this.height = height;
 		projectMatrix.update(width, height);
-		antialiasing.update(width, height);
-		grid.update(width, height);
+		if(properties.get(PropertieAnimation.ANTIALIASING))antialiasing.update(width, height);
+		if(properties.get(PropertieAnimation.GRID))grid.update(width, height);
 	}
 	
 	public void init() {
@@ -51,9 +58,11 @@ public class Window {
 		mouse = new Mouse(this);
 		mouse.init();
 		StorageShaders.getInstance().init();
-		antialiasing = new Antialiasing();
-		antialiasing.init();
-		grid = new Grid(this);
+		if(properties.get(PropertieAnimation.ANTIALIASING)) {
+			antialiasing = new Antialiasing();
+			antialiasing.init();
+		}
+		if(properties.get(PropertieAnimation.GRID))grid = new Grid(this);
 		StorageUniformBuffers.getInstance().init();
 		StorageColors.getInstance().init();
 		
@@ -82,31 +91,39 @@ public class Window {
 	}
 	
 	public void render() {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, width, height);
 		glClearColor(1, 1, 1, 1.0f);
 		
-
-		PVMatrix.set(getProjectMatrix().getProjMatrix()).mul(camera.viewMatrix());
-		StorageUniformBuffers.getInstance().fillUniformBuffer(PVMatrix, camera.viewMatrix(), camera.getCurrentPosition());
 		
-		glBindFramebuffer(GL_FRAMEBUFFER, antialiasing.framebuffer);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
+		StorageUniformBuffers.getInstance().fillUniformBuffer(
+				getProjectMatrix().getProjMatrix(),
+				camera.viewMatrix(), 
+				camera.getCurrentPosition());
+		if(properties.get(PropertieAnimation.ANTIALIASING)) {
+			glBindFramebuffer(GL_FRAMEBUFFER, antialiasing.framebuffer);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glEnable(GL_DEPTH_TEST);
+		}
 		
-		grid.render();
+		if(properties.get(PropertieAnimation.GRID))grid.render();
 		//render figures
 		pol.draw();
 		
 	
 		
 		
-		antialiasing.render();
+		if(properties.get(PropertieAnimation.ANTIALIASING))antialiasing.render();
 	}
 	
 	public void cleanUp() {
 		StorageShaders.getInstance().cleanUp();
-		antialiasing.cleanUp();
-		grid.cleanUp();
+		StorageColors.getInstance().cleanUp();
+		StorageFonts.getInstance().cleanUp();
+		StorageUniformBuffers.getInstance().cleanUp();
+		
+		if(properties.get(PropertieAnimation.ANTIALIASING))antialiasing.cleanUp();
+		if(properties.get(PropertieAnimation.GRID))grid.cleanUp();
 		pol.cleanUp();
 	}
 	
@@ -130,9 +147,15 @@ public class Window {
 		return camera;
 	}
 
-	public Matrix4f getPVMatrix() {
-		return PVMatrix;
+	public Map<PropertieAnimation, Boolean> getProperties() {
+		return properties;
 	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	
 	
 	
 	

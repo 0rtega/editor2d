@@ -31,6 +31,6 @@ void main()
         vec3 Y = vec3( viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1] );
 
 		vec3 vertex =   position.x * X + position.y * Y ;			  
-	    gl_Position = projectionMatrix * worldMatrix *  vec4(vertex, 1.0);
+	    gl_Position = projectionMatrix * viewMatrix * worldMatrix *  vec4(vertex, 1.0);
 	    outTexCoord = texCoord;
 }
