@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import editor2d.Utils.LoaderResources.LinkOnBuffersInVideocard;
+
 
 public  class Mesh implements Serializable {
 
@@ -27,26 +29,24 @@ public  class Mesh implements Serializable {
 	private int kindRender = 0;
 
 	
-//	public Mesh(StorageOfReferencesToFiguresInTheVideoCard.DataFor3DModel data, int primitive) {
-//			this.primitive = primitive;
-//			countIndex = data.getCountIndex();
-//
-//			vao = glGenVertexArrays();
-//			glBindVertexArray(vao);
-//			
-//			glBindBuffer(GL_ARRAY_BUFFER, data.getVbo());
-//			glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-//			glEnableVertexAttribArray(0);
-//
-//			glBindBuffer(GL_ARRAY_BUFFER, data.getNbo());
-//			glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
-//			glEnableVertexAttribArray(2);
-//
-//			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.getIbo());
-//
-//			glBindVertexArray(0);
-//		}
-//	
+	public Mesh(LinkOnBuffersInVideocard data, int primitive) {
+			this.primitive = primitive;
+			
+			countIndex = data.getIndex().capacity();
+			
+
+			vao = glGenVertexArrays();
+			glBindVertexArray(vao);
+			
+			glBindBuffer(GL_ARRAY_BUFFER, data.getVbo());
+			glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+			glEnableVertexAttribArray(0);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.getIbo());
+
+			glBindVertexArray(0);
+		}
+	
 	
 	public Mesh(FloatBuffer vertex, int primitive, int additionalMemory) {	
 		

@@ -1,6 +1,7 @@
 package editor2d.storages;
 
 import modelData.Model;
+import modelData.ModelDataFactory;
 
 public class StorageData {
 
@@ -9,6 +10,11 @@ public class StorageData {
 	public static StorageData getInstance() {
 		return instance;
 	}
+	private StorageData() {
+		model = ModelDataFactory.eINSTANCE.createModel();
+	}
+	
+	
 	private Model model;
 
 	public Model getModel() {

@@ -1,5 +1,9 @@
 package editor2d.Utils;
 
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL31.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -44,83 +48,107 @@ public class LoaderResources {
 		return result;
 	}
 
-	public DataObj loadOBJ(String fileName) throws Exception {
+	public LinkOnBuffersInVideocard loadOBJ(String fileName) {
 		List<String> listString = new ArrayList<>();
-
-		BufferedReader reader = new BufferedReader(new FileReader(fileName));
-
-		while (reader.ready()) {
-			listString.add(reader.readLine());
+		InputStream io = LoaderResources.class.getResourceAsStream(fileName);
+		if(io == null) {
+			throw new NullPointerException("error");
 		}
-
-		reader.close();
-
-		List<Float> preVertex = new ArrayList<>();
-		List<Float> preNormal = new ArrayList<>();
-		List<Integer> preIndex = new ArrayList<>();
-		String[] arr;
-		for (String str : listString) {
-			arr = str.split(" ");
-			if (arr[0].equals("v")) {
-				preVertex.add(Float.parseFloat(arr[1]));
-				preVertex.add(Float.parseFloat(arr[2]));
-				preVertex.add(Float.parseFloat(arr[3]));
-			} else if (arr[0].equals("f")) {
-				preIndex.add(Integer.parseInt(arr[1].split("//")[0]) - 1);
-				preIndex.add(Integer.parseInt(arr[2].split("//")[0]) - 1);
-				preIndex.add(Integer.parseInt(arr[3].split("//")[0]) - 1);
-			} else if (arr[0].equals("vn")) {
-				preNormal.add(Float.parseFloat(arr[1]));
-				preNormal.add(Float.parseFloat(arr[2]));
-				preNormal.add(Float.parseFloat(arr[3]));
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(io));
+	
+			while (reader.ready()) {
+				listString.add(reader.readLine());
 			}
+	
+			reader.close();
+	
+			List<Float> preVertex = new ArrayList<>();
+			List<Float> preNormal = new ArrayList<>();
+			List<Integer> preIndex = new ArrayList<>();
+			String[] arr;
+			for (String str : listString) {
+				arr = str.split(" ");
+				if (arr[0].equals("v")) {
+					preVertex.add(Float.parseFloat(arr[1]));
+					preVertex.add(Float.parseFloat(arr[2]));
+					preVertex.add(Float.parseFloat(arr[3]));
+				} else if (arr[0].equals("f")) {
+					preIndex.add(Integer.parseInt(arr[1].split("//")[0]) - 1);
+					preIndex.add(Integer.parseInt(arr[2].split("//")[0]) - 1);
+					preIndex.add(Integer.parseInt(arr[3].split("//")[0]) - 1);
+				} else if (arr[0].equals("vn")) {
+					preNormal.add(Float.parseFloat(arr[1]));
+					preNormal.add(Float.parseFloat(arr[2]));
+					preNormal.add(Float.parseFloat(arr[3]));
+				}
+			}
+			FloatBuffer vertex;
+			FloatBuffer normal;
+			IntBuffer index;
+			vertex = BufferUtils.createFloatBuffer(preVertex.size());
+			for (float f : preVertex) {
+				vertex.put(f);
+			}
+			vertex.flip();
+	
+			index = BufferUtils.createIntBuffer(preIndex.size());
+			for (int i : preIndex) {
+				index.put(i);
+			}
+			index.flip();
+	
+			normal = BufferUtils.createFloatBuffer(preNormal.size());
+			for (float f : preNormal) {
+				normal.put(f);
+			}
+			normal.flip();
+	
+			return new LinkOnBuffersInVideocard(vertex, normal, index);
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-		FloatBuffer vertex;
-		FloatBuffer normal;
-		IntBuffer index;
-		vertex = BufferUtils.createFloatBuffer(preVertex.size());
-		for (float f : preVertex) {
-			vertex.put(f);
-		}
-		vertex.flip();
-
-		index = BufferUtils.createIntBuffer(preIndex.size());
-		for (int i : preIndex) {
-			index.put(i);
-		}
-		index.flip();
-
-		normal = BufferUtils.createFloatBuffer(preNormal.size());
-		for (float f : preNormal) {
-			normal.put(f);
-		}
-		normal.flip();
-
-		DataObj dataObj = new DataObj(vertex, normal, index);
-		return dataObj;
+		return null;
 	}
 
-	public class DataObj {
+	public class LinkOnBuffersInVideocard {
 		private FloatBuffer vertex;
 		private FloatBuffer normal;
 		private IntBuffer index;
+		private int vbo, nbo, ibo;
 
-		DataObj(FloatBuffer vertex, FloatBuffer normal, IntBuffer index) {
+		public LinkOnBuffersInVideocard(FloatBuffer vertex, FloatBuffer normal, IntBuffer index) {
 			this.vertex = vertex;
 			this.normal = normal;
 			this.index = index;
+			
+			vbo = glGenBuffers();
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			glBufferData(GL_ARRAY_BUFFER, vertex, GL_STATIC_DRAW);
+			
+			nbo = glGenBuffers();
+			glBindBuffer(GL_ARRAY_BUFFER, nbo);
+			glBufferData(GL_ARRAY_BUFFER, normal, GL_STATIC_DRAW);
+			
+			ibo = glGenBuffers();
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, index, GL_STATIC_DRAW);
 		}
 
-		FloatBuffer getVertex() {
-			return vertex;
-		}
-
-		FloatBuffer getNormal() {
-			return normal;
-		}
-
-		IntBuffer getIndex() {
+		public IntBuffer getIndex() {
 			return index;
+		}
+
+		public int getVbo() {
+			return vbo;
+		}
+
+		public int getNbo() {
+			return nbo;
+		}
+
+		public int getIbo() {
+			return ibo;
 		}
 	}
 

@@ -1,6 +1,7 @@
 package editor2d.storages;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import editor2d.editparts.IEditPart;
@@ -18,4 +19,9 @@ public class StorageEditParts {
 	public void addEditPart(IEditPart editPart) {
 		editParts.add(editPart);
 	}
+	public List<IEditPart> getEditParts() {
+		return Collections.unmodifiableList(editParts);
+	}
+	
+	
 }

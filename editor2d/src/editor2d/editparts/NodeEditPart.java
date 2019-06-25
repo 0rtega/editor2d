@@ -1,6 +1,7 @@
 package editor2d.editparts;
 
 import editor2d.figures.Circle;
+import editor2d.figures.IFigure;
 import modelData.Node;
 
 public class NodeEditPart implements IEditPart{
@@ -10,7 +11,12 @@ public class NodeEditPart implements IEditPart{
 
 	public NodeEditPart(Node node) {
 		this.node = node;
-		circle = new Circle();
+		circle = new Circle(node.getX(), node.getY(), node.getZ());
+	}
+	
+	@Override
+	public IFigure getFigure() {
+		return circle;
 	}
 	
 	

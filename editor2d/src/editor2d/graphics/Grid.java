@@ -17,7 +17,7 @@ import editor2d.base.Window;
 import editor2d.control.ArcBallCamera3D;
 import editor2d.meshs.Mesh;
 import editor2d.storages.StorageShaders;
-import editor2d.storages.StorageShaders.Figures;
+import editor2d.storages.StorageShaders.TypeShader;
 
 public class Grid {
 	
@@ -65,7 +65,7 @@ public class Grid {
 	
 	
 	public void init() {
-		shader = StorageShaders.getInstance().getShader(Figures.LINE);
+		shader = StorageShaders.getInstance().getShader(TypeShader.LINE);
 	}
 	private void buildMesh() {
 		init = true;

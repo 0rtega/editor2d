@@ -10,7 +10,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import editor2d.graphics.Shader;
 import editor2d.storages.StorageShaders;
-import editor2d.storages.StorageShaders.Figures;
+import editor2d.storages.StorageShaders.TypeShader;
 
 public class Antialiasing {
 
@@ -57,7 +57,7 @@ public class Antialiasing {
 		    glVertexAttribPointer(10, 2, GL_FLOAT, false, 4 * 4, 0);
 		    glEnableVertexAttribArray(11);
 		    glVertexAttribPointer(11, 2, GL_FLOAT, false, 4 * 4, 2*4);
-		    screenShader = StorageShaders.getInstance().getShader(Figures.ANTIALISING);
+		    screenShader = StorageShaders.getInstance().getShader(TypeShader.ANTIALISING);
 	}
 
 	public void update(int width, int height) {

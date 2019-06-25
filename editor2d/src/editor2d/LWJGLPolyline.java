@@ -20,7 +20,7 @@ import editor2d.graphics.Shader;
 import editor2d.meshs.Mesh;
 import editor2d.storages.StorageColors;
 import editor2d.storages.StorageShaders;
-import editor2d.storages.StorageShaders.Figures;
+import editor2d.storages.StorageShaders.TypeShader;
 
 
 public class LWJGLPolyline  {
@@ -65,7 +65,7 @@ public class LWJGLPolyline  {
 		}
 		
 		if (shader == null) {
-			shader = shadersStorage.getShader(Figures.TRIANGLE3D);
+			shader = shadersStorage.getShader(TypeShader.TRIANGLE3D);
 		}
 		
 		
