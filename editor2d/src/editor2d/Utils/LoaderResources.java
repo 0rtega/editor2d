@@ -150,6 +150,12 @@ public class LoaderResources {
 		public int getIbo() {
 			return ibo;
 		}
+		
+		public void cleanUp() {
+			glDeleteBuffers(vbo);
+			glDeleteBuffers(nbo);
+			glDeleteBuffers(ibo);
+		}
 	}
 
 }

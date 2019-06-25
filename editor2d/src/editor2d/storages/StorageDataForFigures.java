@@ -41,4 +41,10 @@ public class StorageDataForFigures {
 		}
 	}
 	
+	public void cleanUp() {
+		for(LinkOnBuffersInVideocard link: dataForFigures.values()) {
+			link.cleanUp();
+		}
+	}
+	
 }

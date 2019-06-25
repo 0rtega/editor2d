@@ -18,10 +18,14 @@ public class StorageEditParts {
 	
 	public void addEditPart(IEditPart editPart) {
 		editParts.add(editPart);
+		StorageFigures.getInstance().addFigure(editPart.getFigure());
 	}
-	public List<IEditPart> getEditParts() {
-		return Collections.unmodifiableList(editParts);
+	
+	public void removeEditPart(IEditPart editPart) {
+		editParts.remove(editPart);
+		StorageFigures.getInstance().removeFigure(editPart.getFigure());
 	}
+
 	
 	
 }

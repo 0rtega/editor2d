@@ -18,14 +18,18 @@ import editor2d.Utils.Antialiasing;
 import editor2d.Utils.Point;
 import editor2d.base.Animation.PropertieAnimation;
 import editor2d.control.ArcBallCamera3D;
+import editor2d.control.HoverObjectSearch;
 import editor2d.control.Mouse;
 import editor2d.control.ProjectMatrix2D;
 import editor2d.control.Renderer;
 import editor2d.editparts.IEditPart;
+import editor2d.figures.IFigure;
 import editor2d.graphics.Grid;
 import editor2d.storages.StorageColors;
 import editor2d.storages.StorageData;
+import editor2d.storages.StorageDataForFigures;
 import editor2d.storages.StorageEditParts;
+import editor2d.storages.StorageFigures;
 import editor2d.storages.StorageFonts;
 import editor2d.storages.StorageShaders;
 import editor2d.storages.StorageUniformBuffers;
@@ -42,6 +46,7 @@ public class Window {
 	private Editor2DController editor2dController;
 	private Renderer renderer;
 	private Grid grid;
+	private HoverObjectSearch hoverObjectSearch;
 	private Map<PropertieAnimation, Boolean> properties = new HashMap<Animation.PropertieAnimation, Boolean>();
 	{
 		properties.put(PropertieAnimation.ANTIALIASING, true);
@@ -50,12 +55,13 @@ public class Window {
 	public Window(Animation animation) {
 		this.animation = animation;
 		projectMatrix = new ProjectMatrix2D(width, height);
-		camera = new ArcBallCamera3D();
+		camera = ArcBallCamera3D.getInstance();
 		antialiasing = new Antialiasing();
 		grid = new Grid(this);
 		mouse = new Mouse(this);
 		editor2dController = new Editor2DController();
 		renderer = new Renderer();
+		hoverObjectSearch = new HoverObjectSearch();
 	}
 	
 	public void updateSize(int width, int height) {
@@ -123,6 +129,9 @@ public class Window {
 		
 		if(properties.get(PropertieAnimation.GRID))grid.render();
 		//render figures
+		IFigure figure = hoverObjectSearch.searchHoverObject(null);
+		figure.setHover(true);
+		
 		pol.draw();
 		
 		renderer.render();
@@ -132,13 +141,17 @@ public class Window {
 	}
 	
 	public void cleanUp() {
+		
+		if(properties.get(PropertieAnimation.ANTIALIASING))antialiasing.cleanUp();
+		if(properties.get(PropertieAnimation.GRID))grid.cleanUp();
+		StorageFigures.getInstance().cleanUp();
+		
 		StorageShaders.getInstance().cleanUp();
 		StorageColors.getInstance().cleanUp();
 		StorageFonts.getInstance().cleanUp();
 		StorageUniformBuffers.getInstance().cleanUp();
-		
-		if(properties.get(PropertieAnimation.ANTIALIASING))antialiasing.cleanUp();
-		if(properties.get(PropertieAnimation.GRID))grid.cleanUp();
+		StorageDataForFigures.getInstance().cleanUp();
+				
 		pol.cleanUp();
 	}
 	

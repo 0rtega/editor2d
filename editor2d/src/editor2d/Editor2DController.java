@@ -1,5 +1,8 @@
 package editor2d;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
@@ -20,6 +23,7 @@ public class Editor2DController {
 	private IObservableValue<Model> observableModel =  new WritableValue<Model>();
 	private IObservableList<Node> nodes = EMFProperties.list(ModelDataPackage.Literals.MODEL__NODES).observeDetail(observableModel);
 	
+	private Map<Node, NodeEditPart> nodesMap = new HashMap<Node, NodeEditPart>();
 	
 	
 	public Editor2DController() {
@@ -47,11 +51,23 @@ public class Editor2DController {
 			throw new NullPointerException("Значение в модели данных равно null");
 		}else if(o instanceof Node) {
 			NodeEditPart nodeEditPart = new NodeEditPart((Node)o);
+			nodesMap.put((Node)o, nodeEditPart);
 			StorageEditParts.getInstance().addEditPart(nodeEditPart);
 		}
 	}
 	
 	private void removeObject(Object o) {
-		
+		if(o == null) {
+			throw new NullPointerException("Значение в модели данных равно null");
+		}else if(o instanceof Node) {
+			Node node = (Node)o;
+			NodeEditPart nodeEditPart = nodesMap.get(node);
+			if(nodeEditPart == null) {
+				throw new NullPointerException("Не нашлось соответствия node - NodeEditPart в мапе nodesMap");
+			}else {
+				nodesMap.remove(node);
+				StorageEditParts.getInstance().removeEditPart(nodeEditPart);
+			}
+		}
 	}
 }

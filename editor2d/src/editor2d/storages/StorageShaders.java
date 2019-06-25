@@ -59,7 +59,7 @@ public class StorageShaders {
 		shader = createShader(  res.getString("line(v)"),null, res.getString("line(f)"), "color", "currentPosition");
 		shaders.put(TypeShader.LINE, shader);
 		
-		shader = createShader(  res.getString("circle(v)"), null, res.getString("circle(f)"), "currentPosition");
+		shader = createShader(  res.getString("circle(v)"), null, res.getString("circle(f)"), "currentPosition", "color", "scale");
 		shaders.put(TypeShader.CIRCLE, shader);
 	}
 	

@@ -3,15 +3,27 @@ package editor2d.figures;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector3d;
+
 import editor2d.meshs.ListInstanceMeshs;
 
-public class Square implements IFigure {
+public class Square extends IFigure {
 
+	private double x, y, width, height;
+	
 	private List<Circle> circles = new ArrayList<Circle>();
-	private ListInstanceMeshs circleMesh;
+	private ListInstanceMeshs circleMesh = new ListInstanceMeshs();
 	
 	public Square() {
 		
+	}
+	
+	public boolean isEmpty() {
+		return circles.isEmpty();
+	}
+	
+	public boolean belongToPointOfSquare(Vector3d position) {
+		return true;
 	}
 	
 	public void addCicrle(Circle circle) {
@@ -33,22 +45,15 @@ public class Square implements IFigure {
 		this.circles.removeAll(circles);
 		circleMesh.removeData();
 	}
-	
-	
-	@Override
-	public void buildMesh() {
-		
-	}
 
-	@Override
+	public ListInstanceMeshs getCircleMesh() {
+		return circleMesh;
+	}
+	
 	public void cleanUp() {
 		circleMesh.cleanUp();
 	}
-
-	@Override
-	public void render() {
-		circleMesh.render();
-	}
+	
 
 	
 }

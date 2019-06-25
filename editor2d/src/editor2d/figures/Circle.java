@@ -1,68 +1,93 @@
 package editor2d.figures;
 
 import java.awt.Color;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL31.*;
 import org.joml.Vector3d;
-import org.joml.Vector3f;
-import org.lwjgl.BufferUtils;
+import editor2d.control.ArcBallCamera3D;
 
-import editor2d.Utils.Util;
-import editor2d.graphics.Shader;
-import editor2d.meshs.Mesh;
-import editor2d.storages.StorageDataForFigures;
-import editor2d.storages.StorageDataForFigures.TypeFigure;
-import editor2d.storages.StorageShaders;
-import editor2d.storages.StorageShaders.TypeShader;
-
-public class Circle implements IFigure{
-
+public class Circle extends IFigure {
+		
+	private float stepForScale[] = { 1, 1.2f, 1.44f, 1.7279f, 2.0734f, 2.4883f, 2.9858f, 3.5833f, 4.2994f, 5.1597f,
+			6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f };
+		
 	private Vector3d position = new Vector3d();
-	private double radius = 3;
-	private Color color;
-	private boolean select = false;
-	private boolean hover = false;
-	private boolean init = false;
-	private Shader shader;
-	private Mesh mesh;
+	private double radius = 1;
+	private Color  color = Color.RED;
+	private float scale = 1;
+	
+	private Square square;	
+	private boolean unResize = true;
 	
 	
 	public Circle(double x, double y, double z) {
 		position.set(x, y, z);
-		shader = StorageShaders.getInstance().getShader(TypeShader.CIRCLE);
 	}
 	
-	@Override
-	public void buildMesh() {
-		cleanUp();
-		init = true;
-		mesh = new Mesh(StorageDataForFigures.getInstance().getData(TypeFigure.CIRCLE), GL_TRIANGLES);		
+	public void setSquare(Square square) {
+		this.square = square;
 	}
-
-	@Override
-	public void cleanUp() {
-		if(mesh != null) {
-			mesh.cleanUp();
-		}
+	
+	public Square getSquare() {
+		return square;
+	}	
+	
+	public float getScale() {
+		return scale;
 	}
 
-	@Override
-	public void render() {
-		if(!init) {
-			buildMesh();
-		}
-		shader.bind();
-		shader.setUniform3d("currentPosition", position);
-		mesh.render();
-		shader.unbind();
+	public Vector3d getPosition() {
+		return position;
+	}
+
+	public boolean isUnResize() {
+		return unResize;
+	}
+
+	public void setUnResize(boolean unResize) {
+		this.unResize = unResize;
+	}
+
+	public void setX(double x) {
+		position.x = x;
 	}
 	
+	public double getX() {
+		return position.x;
+	}
 	
+	public void setY(double y) {
+		position.y = y;
+	}
 	
+	public double getY() {
+		return position.y;
+	}
+	
+	public void setZ(double z) {
+		position.z = z;
+	}
+	
+	public double getZ() {
+		return position.z;
+	}
+	
+	public void setPosition(double x, double y, double z) {
+		position.set(x,y,z);
+	}
 
+	public double getRadius() {
+		return radius;
+	}
+
+	public void setRadius(double radius) {
+		this.radius = radius;
+		scale = (float)radius * stepForScale[10 - ArcBallCamera3D.getInstance().getCountPress()]/4;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }

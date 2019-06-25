@@ -15,9 +15,12 @@ layout (std140, binding = 4) uniform Mat
 };
 
 uniform vec3 currentPosition;
-
+uniform float scale;
 void main()
 {    
-	mat4 worldMatrix = mat4(worldMatrix1 , worldMatrix2 , worldMatrix3 , vec4(currentPosition, 1));
-	gl_Position = projectionMatrix * viewMatrix * worldMatrix *  vec4(vertex, 1.0);
+	mat4 modelMatrix = mat4(worldMatrix1 , worldMatrix2 , worldMatrix3 , vec4(currentPosition, 1));
+	modelMatrix [0][0] = scale;
+    modelMatrix [1][1] = scale;
+    modelMatrix [2][2] = scale;
+	gl_Position = projectionMatrix * viewMatrix * modelMatrix *  vec4(vertex, 1.0);
 }

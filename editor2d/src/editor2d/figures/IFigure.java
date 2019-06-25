@@ -1,10 +1,25 @@
 package editor2d.figures;
 
-public interface IFigure {
+public abstract class IFigure {
 
+	private boolean select = false;
+	private boolean hover = false;
 	
-	void buildMesh();
-	void cleanUp();
-	void render();
+	
+	public boolean isSelect() {
+		return select;
+	}
+	
+	public void setSelect(boolean select) {
+		this.select = select;
+	}
+
+	public boolean isHover() {
+		return hover;
+	}
+
+	public void setHover(boolean hover) {
+		this.hover = hover;
+	}
 	
 }
