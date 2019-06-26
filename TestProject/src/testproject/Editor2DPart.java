@@ -1,4 +1,4 @@
-package editor2d;
+package testproject;
 
 import javax.annotation.PostConstruct;
 
@@ -11,6 +11,7 @@ import editor2d.storages.StorageData;
 import modelData.Model;
 import modelData.ModelDataFactory;
 import modelData.Node;
+import testproject.editparts.Editor2DController;
 
 public class Editor2DPart {
 
@@ -20,17 +21,22 @@ public class Editor2DPart {
 		Animation animation = new Animation(parent);
 		
 		Model model = StorageData.getInstance().getModel();
-		for (int i = 0; i < 3; i++) {
-			Node node = ModelDataFactory.eINSTANCE.createNode();
-			node.setX(i * 7);
-			node.setY(10);
-			node.setZ(0);
-			model.getNodes().add(node);
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 20; j++) {
+				Node node = ModelDataFactory.eINSTANCE.createNode();
+				node.setX(j * 7);
+				node.setY(i * 10);
+				node.setZ(0);
+				model.getNodes().add(node);
+			}
 		}
 		
 		animation.enable(PropertieAnimation.ANTIALIASING);
 		animation.enable(PropertieAnimation.GRID);
 		animation.setSizeCellGrid(SizeCellGrid.HALF_SIZE);
 		animation.init();
+		Editor2DController controller = new Editor2DController();
+		controller.init();
+		
 	}
 }

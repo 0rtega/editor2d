@@ -1,4 +1,4 @@
-package editor2d.Utils;
+package editor2d.utils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;

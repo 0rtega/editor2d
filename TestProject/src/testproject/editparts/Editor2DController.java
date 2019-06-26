@@ -1,4 +1,4 @@
-package editor2d;
+package testproject.editparts;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.databinding.EMFProperties;
 
-import editor2d.editparts.NodeEditPart;
 import editor2d.storages.StorageData;
 import editor2d.storages.StorageEditParts;
 import modelData.Model;

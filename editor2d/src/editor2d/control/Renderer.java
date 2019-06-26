@@ -1,6 +1,6 @@
 package editor2d.control;
 
-import editor2d.editparts.IEditPart;
+import editor2d.base.IEditPart;
 import editor2d.figures.Square;
 import editor2d.graphics.Shader;
 import editor2d.storages.StorageEditParts;
@@ -13,11 +13,12 @@ public class Renderer {
 	
 	public void render() {
 		Shader shader = StorageShaders.getInstance().getShader(TypeShader.CIRCLE);
+		shader.bind();
+		shader.setUniform1i("zoom", ArcBallCamera3D.getInstance().getCountPress());
 		for(Square square: StorageFigures.getInstance().getSquares()) {
-			shader.bind();
 			square.getCircleMesh().render();
-			shader.unbind();
 		}
+		shader.unbind();
 	}
 	
 }

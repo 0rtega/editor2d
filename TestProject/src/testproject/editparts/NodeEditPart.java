@@ -1,5 +1,6 @@
-package editor2d.editparts;
+package testproject.editparts;
 
+import editor2d.base.IEditPart;
 import editor2d.figures.Circle;
 import editor2d.figures.IFigure;
 import modelData.Node;

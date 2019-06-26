@@ -12,17 +12,13 @@ import java.util.Map;
 
 import org.joml.Matrix4f;
 
-import editor2d.Editor2DController;
 import editor2d.LWJGLPolyline;
-import editor2d.Utils.Antialiasing;
-import editor2d.Utils.Point;
 import editor2d.base.Animation.PropertieAnimation;
 import editor2d.control.ArcBallCamera3D;
 import editor2d.control.HoverObjectSearch;
 import editor2d.control.Mouse;
 import editor2d.control.ProjectMatrix2D;
 import editor2d.control.Renderer;
-import editor2d.editparts.IEditPart;
 import editor2d.figures.IFigure;
 import editor2d.graphics.Grid;
 import editor2d.storages.StorageColors;
@@ -33,6 +29,8 @@ import editor2d.storages.StorageFigures;
 import editor2d.storages.StorageFonts;
 import editor2d.storages.StorageShaders;
 import editor2d.storages.StorageUniformBuffers;
+import editor2d.utils.Antialiasing;
+import editor2d.utils.Point;
 import modelData.Node;
 
 public class Window {
@@ -43,7 +41,6 @@ public class Window {
 	private ArcBallCamera3D camera;
 	private Mouse mouse;
 	private Antialiasing antialiasing;
-	private Editor2DController editor2dController;
 	private Renderer renderer;
 	private Grid grid;
 	private HoverObjectSearch hoverObjectSearch;
@@ -59,7 +56,6 @@ public class Window {
 		antialiasing = new Antialiasing();
 		grid = new Grid(this);
 		mouse = new Mouse(this);
-		editor2dController = new Editor2DController();
 		renderer = new Renderer();
 		hoverObjectSearch = new HoverObjectSearch();
 	}
@@ -95,14 +91,13 @@ public class Window {
 		glDepthFunc(GL_LEQUAL);
 		
 		
-		editor2dController.init();
 		List<Point> points = new ArrayList<Point>();
 		points.add(new Point(0,0,0));
 		points.add(new Point(4,1,0));
 		points.add(new Point(4,5,0));
 		points.add(new Point(10,8,0));
 		
-		pol = new LWJGLPolyline(points, Color.BLUE, 1, 0);
+		pol = new LWJGLPolyline(points, Color.RED, 1, 0);
 	}
 	LWJGLPolyline pol ;
 	
@@ -121,6 +116,7 @@ public class Window {
 				getProjectMatrix().getProjMatrix(),
 				camera.viewMatrix(), 
 				camera.getCurrentPosition());
+		
 		if(properties.get(PropertieAnimation.ANTIALIASING)) {
 			glBindFramebuffer(GL_FRAMEBUFFER, antialiasing.framebuffer);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -129,8 +125,8 @@ public class Window {
 		
 		if(properties.get(PropertieAnimation.GRID))grid.render();
 		//render figures
-		IFigure figure = hoverObjectSearch.searchHoverObject(null);
-		figure.setHover(true);
+//		IFigure figure = hoverObjectSearch.searchHoverObject(null);
+//		figure.setHover(true);
 		
 		pol.draw();
 		

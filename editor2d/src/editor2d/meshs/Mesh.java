@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import editor2d.Utils.LoaderResources.LinkOnBuffersInVideocard;
+import editor2d.utils.LoaderResources.LinkOnBuffersInVideocard;
 
 
 public  class Mesh implements Serializable {

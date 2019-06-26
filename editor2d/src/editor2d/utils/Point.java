@@ -1,4 +1,4 @@
-package editor2d.Utils;
+package editor2d.utils;
 
 
 public class Point {

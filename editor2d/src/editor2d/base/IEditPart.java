@@ -1,4 +1,4 @@
-package editor2d.editparts;
+package editor2d.base;
 
 import editor2d.figures.IFigure;
 

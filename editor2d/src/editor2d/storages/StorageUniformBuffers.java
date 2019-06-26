@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.glBindBufferRange;
 import static org.lwjgl.opengl.GL31.GL_UNIFORM_BUFFER;
 
+import java.awt.Color;
+
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -63,29 +65,32 @@ public class StorageUniformBuffers {
 	
 
 	private int currentIndexMyColor = 0;
-	public void addColorInGPU(StorageColors.NnspgColor myColor){
+	public void addColorInGPU(Color myColor){
 		if(currentIndexMyColor > 39){
 			throw new NullPointerException("Переполнен буффер с цветом");
 		}		
 		
 		glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-		glBufferSubData(GL_UNIFORM_BUFFER, 144 + currentIndexMyColor * 16, myColor.getAsBuffer());
+		glBufferSubData(GL_UNIFORM_BUFFER, 144 + currentIndexMyColor * 16, getColorAsBuffer(myColor));
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		
 		currentIndexMyColor++;
 	}
 	
-	public void removeColorInGPU(StorageColors.NnspgColor myColor){
+	private float [] getColorAsBuffer(Color color) {
+		return  color.getComponents(new float[4]);
+	}
+	public void removeColorInGPU(Color myColor){
 		
 	}
 	
-	public void updateColorInGPU(StorageColors.NnspgColor myColor, int index){
+	public void updateColorInGPU(Color myColor, int index){
 		if(index > 39){
 			throw new NullPointerException("Переполнен буффер с цветом");
 		}
 		
 		glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-		glBufferSubData(GL_UNIFORM_BUFFER, 144 + index  * 16, myColor.getAsBuffer());
+		glBufferSubData(GL_UNIFORM_BUFFER, 144 + index  * 16, getColorAsBuffer(myColor));
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);	
 	}
 

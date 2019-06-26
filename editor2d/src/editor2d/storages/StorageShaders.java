@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import editor2d.Utils.LoaderResources;
 import editor2d.graphics.Shader;
+import editor2d.utils.LoaderResources;
 
 public class StorageShaders {
 
@@ -59,7 +59,7 @@ public class StorageShaders {
 		shader = createShader(  res.getString("line(v)"),null, res.getString("line(f)"), "color", "currentPosition");
 		shaders.put(TypeShader.LINE, shader);
 		
-		shader = createShader(  res.getString("circle(v)"), null, res.getString("circle(f)"), "currentPosition", "color", "scale");
+		shader = createShader(  res.getString("circle(v)"), null, res.getString("circle(f)"), "zoom");
 		shaders.put(TypeShader.CIRCLE, shader);
 	}
 	

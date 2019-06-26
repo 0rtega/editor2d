@@ -12,12 +12,12 @@ import static org.lwjgl.opengl.GL11.*;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
-import editor2d.Utils.Util;
 import editor2d.base.Window;
 import editor2d.control.ArcBallCamera3D;
 import editor2d.meshs.Mesh;
 import editor2d.storages.StorageShaders;
 import editor2d.storages.StorageShaders.TypeShader;
+import editor2d.utils.Util;
 
 public class Grid {
 	
@@ -143,7 +143,7 @@ public class Grid {
 		centerGrid.z = 0;
 		glLineWidth(1);
 		shader.bind();
-		shader.setUniform1i("color", 3);
+		shader.setUniform1i("color", 8);
 		shader.setUniform3f("currentPosition", centerGrid);
 		meshs.get(camera.getCountPress()).render();
 		shader.unbind();

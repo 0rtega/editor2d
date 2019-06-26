@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import editor2d.Utils.LoaderResources;
-import editor2d.Utils.LoaderResources.LinkOnBuffersInVideocard;
+import editor2d.utils.LoaderResources;
+import editor2d.utils.LoaderResources.LinkOnBuffersInVideocard;
 
 public class StorageDataForFigures {
 

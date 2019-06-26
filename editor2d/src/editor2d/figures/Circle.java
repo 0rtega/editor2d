@@ -3,14 +3,17 @@ package editor2d.figures;
 import java.awt.Color;
 import org.joml.Vector3d;
 import editor2d.control.ArcBallCamera3D;
+import editor2d.utils.Offset;
 
 public class Circle extends IFigure {
 		
 	private float stepForScale[] = { 1, 1.2f, 1.44f, 1.7279f, 2.0734f, 2.4883f, 2.9858f, 3.5833f, 4.2994f, 5.1597f,
 			6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f, 6.1912f };
 		
+	private Offset offset = new Offset();
+	
 	private Vector3d position = new Vector3d();
-	private double radius = 1;
+	private float radius = 1;
 	private Color  color = Color.RED;
 	private float scale = 1;
 	
@@ -20,6 +23,7 @@ public class Circle extends IFigure {
 	
 	public Circle(double x, double y, double z) {
 		position.set(x, y, z);
+		scale = (float)radius * stepForScale[10 - ArcBallCamera3D.getInstance().getCountPress()]/4;
 	}
 	
 	public void setSquare(Square square) {
@@ -74,13 +78,12 @@ public class Circle extends IFigure {
 		position.set(x,y,z);
 	}
 
-	public double getRadius() {
+	public float getRadius() {
 		return radius;
 	}
 
-	public void setRadius(double radius) {
+	public void setRadius(float radius) {
 		this.radius = radius;
-		scale = (float)radius * stepForScale[10 - ArcBallCamera3D.getInstance().getCountPress()]/4;
 	}
 
 	public Color getColor() {
@@ -90,4 +93,9 @@ public class Circle extends IFigure {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+	public Offset getOffset() {
+		return offset;
+	}
+	
 }

@@ -13,14 +13,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
-import editor2d.Utils.Identifier;
-import editor2d.Utils.Point;
-import editor2d.Utils.Util;
 import editor2d.graphics.Shader;
 import editor2d.meshs.Mesh;
 import editor2d.storages.StorageColors;
 import editor2d.storages.StorageShaders;
 import editor2d.storages.StorageShaders.TypeShader;
+import editor2d.utils.Identifier;
+import editor2d.utils.Point;
+import editor2d.utils.Util;
 
 
 public class LWJGLPolyline  {
@@ -141,15 +141,10 @@ public class LWJGLPolyline  {
 //			
 			index.addAll(Arrays.asList(p));
 			t += 8;
-			
-			StorageColors.NnspgColor cc = StorageColors.getInstance().new NnspgColor(
-					color.getRed()/255f,
-					color.getGreen()/255f,
-					color.getBlue()/255f,
-					color.getAlpha()/255f);
-			StorageColors.getInstance().addColor(cc);
-			int in = StorageColors.getInstance().getIndexMyColor(cc);	
-			
+			if(!StorageColors.getInstance().containsColor(color)) {
+				StorageColors.getInstance().addColor(color);
+			}
+			int in = StorageColors.getInstance().getIndexMyColor(color);	
 			for(int e = 0; e < 8; e++){
 				colors.add(in);
 				visible.add(1);

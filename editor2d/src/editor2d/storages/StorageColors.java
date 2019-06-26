@@ -6,22 +6,22 @@ import java.util.List;
 
 public class StorageColors {
 
-	 static NnspgColor red;
-	 static NnspgColor green;
-	 static NnspgColor cyan;
-	 static NnspgColor grey;
-	 static NnspgColor black;
+	 static Color red;
+	 static Color green;
+	 static Color cyan;
+	 static Color grey;
+	 static Color black;
 	
-	 static NnspgColor blue;
-	 static NnspgColor redTransparent;
-	 static NnspgColor yellow;
-	 static NnspgColor orange;	
-	 static NnspgColor white;
+	 static Color blue;
+	 static Color redTransparent;
+	 static Color yellow;
+	 static Color orange;	
+	 static Color white;
 	
-	 static NnspgColor lightGreyForSegment;
-	 static NnspgColor lightGreyForNode;
-	 static NnspgColor veryLightGreyForSegment;
-	 static NnspgColor veryLightGreyForNode;
+	 static Color lightGreyForSegment;
+	 static Color lightGreyForNode;
+	 static Color veryLightGreyForSegment;
+	 static Color veryLightGreyForNode;
 	
 	
 	private static StorageColors instance = new StorageColors();
@@ -32,26 +32,25 @@ public class StorageColors {
 	private StorageUniformBuffers uniformBuffer;
 	
 	private StorageColors(){
-		red = new NnspgColor(1, 0, 0, 1);
-		 green = new NnspgColor(0, 1, 0, 1);
-		 cyan = new NnspgColor(0, 1, 1, 1);
-		grey = new NnspgColor(0.5f, 0.5f, 0.5f, 1);
+		red = new Color(1, 0, 0, 1);
+		 green = new Color(0, 1, 0, 1);
+		 cyan = new Color(0, 1, 1, 1);
+		grey = Color.GRAY;
+		 blue =new Color(0, 0, 1, 1);
+		 redTransparent = new Color(1, 0, 0, 0.5f);
+		yellow = new Color(1f, 1f, 0f, 1);
+		orange = new Color(1f, 165f/255f, 0, 1);
 		
-		 blue =new NnspgColor(0, 0, 1, 1);
-		 redTransparent = new NnspgColor(1, 0, 0, 0.5f);
-		yellow = new NnspgColor(1f, 1f, 0f, 1);
-		orange = new NnspgColor(1f, 165f/255f, 0, 1);
+		lightGreyForSegment = new Color(132f/255f, 132f/255f, 132f/255f, 1);
+		veryLightGreyForSegment = new Color(245f/255f, 245f/255f, 245f/255f, 1);
+		lightGreyForNode = new Color(102f/255f, 102f/255f, 102f/255f, 1);
+		veryLightGreyForNode = new Color(225f/255f, 225f/255f, 225f/255f, 1);
 		
-		lightGreyForSegment = new NnspgColor(132f/255f, 132f/255f, 132f/255f, 1);
-		veryLightGreyForSegment = new NnspgColor(245f/255f, 245f/255f, 245f/255f, 1);
-		lightGreyForNode = new NnspgColor(102f/255f, 102f/255f, 102f/255f, 1);
-		veryLightGreyForNode = new NnspgColor(225f/255f, 225f/255f, 225f/255f, 1);
-		
-		black = new NnspgColor(0, 0, 0, 1);
-		white = new NnspgColor(1, 1, 1, 1);
+		black = new Color(0, 0, 0, 1);
+		white = new Color(1, 1, 1, 1);
 	}
 
-	private List<NnspgColor> colors = new ArrayList<>();
+	private List<Color> colors = new ArrayList<>();
 	
 	public void init(){
 		uniformBuffer = StorageUniformBuffers.getInstance();
@@ -61,7 +60,7 @@ public class StorageColors {
 		addColor(cyan);
 		addColor(grey);
 		addColor(blue);
-		addColor(new NnspgColor(0, 0, 0, 0));
+		addColor(new Color(0, 0, 0, 0));
 		addColor(redTransparent);
 		addColor(yellow);
 		addColor(lightGreyForSegment);
@@ -73,121 +72,31 @@ public class StorageColors {
 		addColor(white);
 	}
 	
-	public void addColor(NnspgColor color){
+	public void addColor(Color color){
 		if(!colors.contains(color)){
 			colors.add(color);
 			uniformBuffer.addColorInGPU(color);
 		}
 	}
 	
-	public void updateColor(NnspgColor myColor, Color c){
-		myColor.setColor(c.getRed()/255f, c.getGreen()/255f,c.getBlue()/255f,c.getAlpha()/255f);
-		uniformBuffer.updateColorInGPU(myColor, colors.indexOf(myColor));
-	}
-	
-	public NnspgColor getColor(int index){
+	public Color getColor(int index){
 		return colors.get(index);
 	}
 	
-	public boolean containsColor(NnspgColor color){
+	public boolean containsColor(Color color){
 		return colors.contains(color);
-	}
+	}	
 	
-	
-	public int getIndexMyColor(NnspgColor myColor){
+	public int getIndexMyColor(Color myColor){
 		return colors.indexOf(myColor);
 	}
 	
 	public void cleanUp(){
 		colors.clear();
-	}
+	}	
 	
-	
-	public List<NnspgColor> getColors() {
+	public List<Color> getColors() {
 		return colors;
 	}
-
-
-
-
-public 	 class NnspgColor{
-		private float red,green,blue,alpha;
-	
-		public NnspgColor(float red, float green, float blue, float alpha){
-			this.red = red;
-			this.green = green;
-			this.blue = blue;
-			this.alpha = alpha;
-		}
-		
-		public void setColor(float red, float green, float blue, float alpha){
-			this.red = red;
-			this.green = green;
-			this.blue = blue;
-			this.alpha = alpha;
-		}
-		
-		public float getRed() {
-			return red;
-		}
-
-		public float getGreen() {
-			return green;
-		}
-
-		public float getBlue() {
-			return blue;
-		}
-
-		public float getAlpha() {
-			return alpha;
-		}
-
-		
-		public float [] getAsBuffer(){
-			float [] f = {red, green, blue, alpha};
-			return f;
-		}
-		
-		
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + Float.floatToIntBits(alpha);
-			result = prime * result + Float.floatToIntBits(blue);
-			result = prime * result + Float.floatToIntBits(green);
-			result = prime * result + Float.floatToIntBits(red);
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			NnspgColor other = (NnspgColor) obj;
-			if (Float.floatToIntBits(alpha) != Float.floatToIntBits(other.alpha))
-				return false;
-			if (Float.floatToIntBits(blue) != Float.floatToIntBits(other.blue))
-				return false;
-			if (Float.floatToIntBits(green) != Float.floatToIntBits(other.green))
-				return false;
-			if (Float.floatToIntBits(red) != Float.floatToIntBits(other.red))
-				return false;
-			return true;
-		}
-
-		@Override
-		public String toString() {
-			return "red = " + red + " " + "green = " + green + " blue = " + blue + " alpha = " + alpha;
-		}
-
-	}
-	
 	
 }

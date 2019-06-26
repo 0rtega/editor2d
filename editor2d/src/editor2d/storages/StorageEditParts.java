@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import editor2d.editparts.IEditPart;
+import editor2d.base.IEditPart;
 
 public class StorageEditParts {
 

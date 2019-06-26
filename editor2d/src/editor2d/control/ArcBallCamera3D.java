@@ -8,7 +8,7 @@ import org.joml.Vector3d;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 
-import editor2d.Utils.FrustumCullingFilter;
+import editor2d.utils.FrustumCullingFilter;
 
 class ScalarMover {
 
