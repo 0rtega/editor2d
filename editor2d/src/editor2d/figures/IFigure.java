@@ -3,7 +3,7 @@ package editor2d.figures;
 public abstract class IFigure {
 
 	private boolean select = false;
-	private boolean hover = false;
+	private boolean hover = true;
 	
 	
 	public boolean isSelect() {

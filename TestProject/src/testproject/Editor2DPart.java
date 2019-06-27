@@ -21,8 +21,8 @@ public class Editor2DPart {
 		Animation animation = new Animation(parent);
 		
 		Model model = StorageData.getInstance().getModel();
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 20; j++) {
+		for (int i = -50; i < 50; i++) {
+			for (int j = -20; j < 20; j++) {
 				Node node = ModelDataFactory.eINSTANCE.createNode();
 				node.setX(j * 7);
 				node.setY(i * 10);

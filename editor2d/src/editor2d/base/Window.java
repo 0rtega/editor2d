@@ -122,16 +122,17 @@ public class Window {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glEnable(GL_DEPTH_TEST);
 		}
-		
+	
+	
 		if(properties.get(PropertieAnimation.GRID))grid.render();
+	
 		//render figures
 //		IFigure figure = hoverObjectSearch.searchHoverObject(null);
 //		figure.setHover(true);
 		
-		pol.draw();
-		
 		renderer.render();
 		
+		pol.draw();
 		
 		if(properties.get(PropertieAnimation.ANTIALIASING))antialiasing.render();
 	}

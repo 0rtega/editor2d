@@ -11,8 +11,8 @@ layout (std140, binding = 4) uniform Mat
 };
 
 out vec4 fragColor;
-in flat int colorOut;
+in flat int color;
 void main()
 {
-	fragColor = colors[colorOut];
+	fragColor = colors[color];
 }

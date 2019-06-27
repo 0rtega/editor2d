@@ -14,7 +14,7 @@ import editor2d.figures.Square;
 public class StorageFigures {
 
 	private static StorageFigures instance = new StorageFigures();
-	private double widthSquare = 100, heightSquare = 100; 
+	private int widthSquare = 100, heightSquare = 100; 
 	public static StorageFigures getInstance() {
 		return instance;
 	}
@@ -48,17 +48,16 @@ public class StorageFigures {
 		}
 	}
 
-	private Square findSquareForFigure(Vector3d position) {
+	private Square findSquareForFigure(Vector3d p) {
 		Square square = null;
-		;
 		for (Square sq : squares) {
-			if (sq.belongToPointOfSquare(position)) {
+			if (sq.belongToPointOfSquare(p)) {
 				square = sq;
 				break;
 			}
 		}
 		if (square == null) {
-			square = createSquare(position);
+			square = createSquare(p);
 			squares.add(square);
 		}
 		return square;
@@ -70,44 +69,45 @@ public class StorageFigures {
 			if (p.y >= 0) {
 				//x >=0  y >=0
 				double t = p.y % heightSquare;
-				startX = (int)(p.x / widthSquare);
+				startX = (int)(p.x / widthSquare) * widthSquare;
 				if(t > 0) {
-					startY = (int)(p.y / heightSquare) + 1;
+					startY = ((int)(p.y / heightSquare) + 1) * heightSquare;
 				}else {
-					startY = (int)(p.y / heightSquare);
-				}				
+					startY = ((int)(p.y / heightSquare)) * heightSquare;
+				}	
+				
 			} else {
 				//x >=0  y < 0
-				startX = (int)(p.x / widthSquare);
-				startY = (int)(p.y / heightSquare);							
+				startX = ((int)(p.x / widthSquare) )* widthSquare;
+				startY = ((int)(p.y / heightSquare) )* heightSquare;							
 			}
 		} else {
 			if (p.y >= 0) {
 				//x < 0  y >=0
 				double t = p.y % heightSquare;
 				if(t > 0) {
-					startY = (int)(p.y / heightSquare) + 1;
+					startY = ((int)(p.y / heightSquare) + 1) * heightSquare;
 				}else {
-					startY = (int)(p.y / heightSquare);
+					startY = ((int)(p.y / heightSquare)) * heightSquare;
 				}				
 				t = p.x % widthSquare;
 				if(t > 0) {
-					startX = (int)(p.x / widthSquare) + 1;
+					startX = ((int)(p.x / widthSquare) + 1) * widthSquare;
 				}else {
-					startX = (int)(p.x / widthSquare);
+					startX = ((int)(p.x / widthSquare)) * widthSquare;
 				}			
 			} else {
 				//x < 0  y < 0
 				double t = p.x % widthSquare;
-				startY = (int)(p.y / heightSquare);
+				startY = ((int)(p.y / heightSquare)) * heightSquare;
 				if(t > 0) {
-					startX = (int)(p.x / widthSquare) + 1;
+					startX = ((int)(p.x / widthSquare) + 1) * widthSquare;
 				}else {
-					startX = (int)(p.x / widthSquare);
+					startX = ((int)(p.x / widthSquare)) * widthSquare;
 				}				
 			}
 		}
-		return new Square(startX, startY, startX + widthSquare, startY + heightSquare);
+		return new Square(startX, startY, widthSquare, heightSquare);
 	}
 
 	public List<Square> getSquares() {

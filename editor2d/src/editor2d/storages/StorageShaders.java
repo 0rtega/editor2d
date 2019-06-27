@@ -45,23 +45,27 @@ public class StorageShaders {
 		shader = createShader(res.getString("text3d(v)"), null, res.getString("text3d(f)"),
 				 "scale", "color", "currentPosition", "texture_sampler",  "select", "colorId");		
 			shaders.put(TypeShader.TEST_TEXT3D, shader);
-		
+			shader = createShader(  res.getString("circle(v)"),  res.getString("circle(g)"), res.getString("circle(f)"), "zoom");
+			shaders.put(TypeShader.CIRCLE, shader);
 		
 		shader = createShader(res.getString("model(v)"), null , res.getString("model(f)") , "position", "scale",
 				 "uAmbientColor", "uDiffuseColor", "uSpecularColor", "rotate", "select", "colorId");
 		shaders.put(TypeShader.MODEL, shader);
-		shader = createShader(  res.getString("triangle(v)"),res.getString("triangle(g)"), res.getString("triangle(f)"), "select", "colorId");
+		shader = createShader(  res.getString("triangle(v)"), res.getString("triangle(g)"), res.getString("triangle(f)"), "select", "colorId");
 		shaders.put(TypeShader.TRIANGLE3D, shader);
 		
 		shader = createShader(  res.getString("antialiasing(v)"),null, res.getString("antialiasing(f)"), "screenTexture");
 		shaders.put(TypeShader.ANTIALISING, shader);
 		
+
+		
 		shader = createShader(  res.getString("line(v)"),null, res.getString("line(f)"), "color", "currentPosition");
 		shaders.put(TypeShader.LINE, shader);
 		
-		shader = createShader(  res.getString("circle(v)"), null, res.getString("circle(f)"), "zoom");
-		shaders.put(TypeShader.CIRCLE, shader);
+
 	}
+	
+
 	
 	private Shader createShader(String v, String g, String f, String... uniform)throws Exception{
 		Shader shader = new Shader();

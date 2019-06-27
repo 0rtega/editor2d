@@ -17,6 +17,6 @@ uniform vec3 currentPosition;
 
 void main(){   
 
-	mat4 worldMatrix = mat4(worldMatrix1, worldMatrix2, worldMatrix3, vec4(currentPosition, 1));
+	mat4 worldMatrix = mat4(worldMatrix1, worldMatrix2, worldMatrix3, vec4(currentPosition, 1.0));
    	gl_Position =  projectionMatrix  * viewMatrix * worldMatrix * vec4(position, 1.0);
 }
